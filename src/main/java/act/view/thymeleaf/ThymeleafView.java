@@ -5,19 +5,17 @@ import act.app.App;
 import act.util.ActContext;
 import act.view.Template;
 import act.view.View;
-import org.osgl.util.C;
-import org.osgl.util.IO;
+import org.osgl.util.S;
 import org.thymeleaf.IEngineConfiguration;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.exceptions.TemplateProcessingException;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+import org.thymeleaf.templateresolver.StringTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolution;
 import org.thymeleaf.templateresource.ITemplateResource;
 
-import java.io.File;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ThymeleafView extends View {
@@ -25,8 +23,10 @@ public class ThymeleafView extends View {
     public static final String ID = "thymeleaf";
 
     private TemplateEngine engine;
+    private TemplateEngine stringResourceEngine;
     private ClassLoaderTemplateResolver templateResolver;
     private IEngineConfiguration configuration;
+    private String suffix;
 
     @Override
     public String name() {
@@ -36,10 +36,22 @@ public class ThymeleafView extends View {
     @Override
     protected Template loadTemplate(String resourcePath, ActContext context) {
         if (!checkResource(resourcePath)) {
-            return null;
+            if (resourcePath.endsWith(suffix)) {
+                return null;
+            }
+            return loadTemplate(S.concat(resourcePath, suffix), context);
         }
         try {
             return new ThymeleafTemplate(resourcePath, engine);
+        } catch (TemplateProcessingException e) {
+            throw new ThymeleafTemplateException(e);
+        }
+    }
+
+    @Override
+    protected Template loadInlineTemplate(String content, ActContext actContext) {
+        try {
+            return new ThymeleafTemplate(content, stringResourceEngine);
         } catch (TemplateProcessingException e) {
             throw new ThymeleafTemplateException(e);
         }
@@ -50,6 +62,18 @@ public class ThymeleafView extends View {
         engine = new TemplateEngine();
         engine.setTemplateResolvers(prepareResolvers());
         configuration = engine.getConfiguration();
+        suffix = app.config().get("view.thymeleaf.suffix");
+        if (null == suffix) {
+            suffix = ".thymeleaf";
+        } else {
+            suffix = suffix.startsWith(".") ? suffix : S.concat(".", suffix);
+        }
+        initStringResourceEngine();
+    }
+
+    private void initStringResourceEngine() {
+        stringResourceEngine = new TemplateEngine();
+        stringResourceEngine.setTemplateResolver(new StringTemplateResolver());
     }
 
     private Set<ITemplateResolver> prepareResolvers() {
