@@ -2,7 +2,6 @@ package act.view.thymeleaf;
 
 import act.Act;
 import act.app.App;
-import act.util.ActContext;
 import act.view.Template;
 import act.view.View;
 import org.osgl.util.S;
@@ -34,12 +33,12 @@ public class ThymeleafView extends View {
     }
 
     @Override
-    protected Template loadTemplate(String resourcePath, ActContext context) {
+    protected Template loadTemplate(String resourcePath) {
         if (!checkResource(resourcePath)) {
             if (resourcePath.endsWith(suffix)) {
                 return null;
             }
-            return loadTemplate(S.concat(resourcePath, suffix), context);
+            return loadTemplate(S.concat(resourcePath, suffix));
         }
         try {
             return new ThymeleafTemplate(resourcePath, engine);
@@ -49,7 +48,7 @@ public class ThymeleafView extends View {
     }
 
     @Override
-    protected Template loadInlineTemplate(String content, ActContext actContext) {
+    protected Template loadInlineTemplate(String content) {
         try {
             return new ThymeleafTemplate(content, stringResourceEngine);
         } catch (TemplateProcessingException e) {

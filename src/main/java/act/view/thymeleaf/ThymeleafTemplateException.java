@@ -34,6 +34,12 @@ public class ThymeleafTemplateException extends act.view.TemplateException {
     }
 
     @Override
+    public String errorMessage() {
+        Throwable t = rootCauseOf(this);
+        return t.toString();
+    }
+
+    @Override
     protected boolean isTemplateEngineInvokeLine(String s) {
         return s.contains("ognl.OgnlRuntime.invokeMethod");
     }
