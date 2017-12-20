@@ -21,7 +21,7 @@
   <groupId>org.actframework</groupId>
   <artifactId>act-thymeleaf</artifactId>
   <packaging>jar</packaging>
-  <version>1.2.0-RC1-SNAPSHOT</version>
+  <version>1.2.0-RC1</version>
 
   <name>ACT Thymeleaf</name>
   <description>Implement ActFramework View with Thymeleaf template engine</description>
