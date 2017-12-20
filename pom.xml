@@ -34,7 +34,7 @@
   </parent>
 
   <properties>
-    <scm.url>git@github.com:actframework/act-ebean2.git</scm.url>
+    <scm.url>git@github.com:actframework/act-thymeleaf.git</scm.url>
     <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
   </properties>
 
