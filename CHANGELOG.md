@@ -1,5 +1,8 @@
 # Act-Thymeleaf Change Log
 
+1.3.0 20/Feb/2018
+* update to act-1.7.0
+
 1.2.0-RC1 19/Dec/2017
 * update to act-1.6.x
 * update to thymeleaf-3.0.9-RELEASE
