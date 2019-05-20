@@ -29,12 +29,12 @@
   <parent>
     <groupId>org.actframework</groupId>
     <artifactId>parent</artifactId>
-    <version>1.8.9</version>
+    <version>1.8.22</version>
   </parent>
 
   <properties>
     <scm.url>git@github.com:actframework/act-thymeleaf.git</scm.url>
-    <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+    <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
   </properties>
 
   <scm>
