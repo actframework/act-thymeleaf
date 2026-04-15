@@ -34,7 +34,7 @@
 
   <properties>
     <scm.url>git@github.com:actframework/act-thymeleaf.git</scm.url>
-    <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+    <thymeleaf.version>3.1.4.RELEASE</thymeleaf.version>
   </properties>
 
   <scm>
